@@ -8,15 +8,22 @@ from multiprocessing import Pool
 def in_ZZ(Fraction):
     return Fraction.denominator==1
 
-def verify(tuple,beta):
-    r = tuple[0]
-    c = tuple[1]
-    d = tuple[2]
-    e = tuple[3]
-    a = d - fr(c**2, 2) + (beta)*c*(1-r) + (fr(beta**2, 2))*r*(1-r)
-    b = e - fr(c, 6) + (beta)*(d - fr(r, 6)) + (fr(beta**2, 2))*c + (fr(beta**3, 6))*r
-    c = 2*e - c*d + fr(c**3, 6) + (beta)*(d*(2-r) + (c**2)*(3*r-1)) + fr(beta**2, 2)*c*(2 + r*(r-3)) + fr(beta**3, 6)*r*(r-1)*(r-2)
-    return in_ZZ(a) and in_ZZ(b) and in_ZZ(c)
+def verify(tuple,beta,amb_sp):
+    if amb_sp="P3":
+        r = tuple[0]
+        c = tuple[1]
+        d = tuple[2]
+        e = tuple[3]
+        a = d - fr(c**2, 2) + (beta)*c*(1-r) + (fr(beta**2, 2))*r*(1-r)
+        b = e - fr(c, 6) + (beta)*(d - fr(r, 6)) + (fr(beta**2, 2))*c + (fr(beta**3, 6))*r
+        c = 2*e - c*d + fr(c**3, 6) + (beta)*(d*(2-r) + (c**2)*(3*r-1)) + fr(beta**2, 2)*c*(2 + r*(r-3)) + fr(beta**3, 6)*r*(r-1)*(r-2)
+        return in_ZZ(a) and in_ZZ(b) and in_ZZ(c)
+    elif amb_sp="Ab3":
+        r = tuple[0]
+        c = tuple[1]
+        d = tuple[2]
+        e = tuple[3]
+        return in_ZZ(r) and in_ZZ(c) and in_ZZ(d) and in_ZZ(e) 
 
 def grandverify(list,beta):
     a = len(list)
