@@ -132,7 +132,7 @@ class Sheaf:
         return self.dest
 
 t1 = time.time()
-a = Sheaf(0,4,1, "Ab3")
+a = Sheaf(0,2,2, "Ab3")
 print(a.num_dest(1))
 t2 = time.time()
 total = t2-t1
