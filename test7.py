@@ -16,16 +16,16 @@ def verify(tuple,beta,amb_sp):
         e = tuple[3]
         a = d - fr(c**2, 2) + (beta)*c*(1-r) + (fr(beta**2, 2))*r*(1-r)
         b = e - fr(c, 6) + (beta)*(d - fr(r, 6)) + (fr(beta**2, 2))*c + (fr(beta**3, 6))*r
-        c = 2*e - c*d + fr(c**3, 6) + (beta)*(d*(2-r) + (c**2)*(3*r-1)) + fr(beta**2, 2)*c*(2 + r*(r-3)) + fr(beta**3, 6)*r*(r-1)*(r-2)
+        c_result = 2*e - c*d + fr(c**3, 6) + (beta)*(d*(2-r) + (c**2)*(3*r-1)) + fr(beta**2, 2)*c*(2 + r*(r-3)) + fr(beta**3, 6)*r*(r-1)*(r-2)
     elif amb_sp=="Ab3":
         r = tuple[0]
         c = tuple[1]
         d = tuple[2]
         e = tuple[3]
         a = r*(beta**3) + 3*(beta**2)*c + 3*beta*d + e
-        b = r*(beta**2) + 2*beta*c + d
-        c = r*beta + c
-    return in_ZZ(a) and in_ZZ(b) and in_ZZ(c) 
+        b = r*(beta**2) + 2*beta*c + fr(c**2,2) - d
+        c_result = r*beta - c*d + fr(c**3, 6)
+    return in_ZZ(a) and in_ZZ(b) and in_ZZ(c_result) 
 
 def grandverify(list,beta, amb_sp):
     a = len(list)
@@ -38,7 +38,7 @@ def grandverify(list,beta, amb_sp):
             definitive = ([], list[i][2],list[i][3],list[i][4])
             wl =  math.sqrt(fr(6*list[i][4], list[i][2])) 
             # This if comes from a conjecture. Change to 1 or 0 if needed. 
-            if wl > (1):
+            if wl >= 1:
                 for j in range(r1,r2+1):
                     c=(j,list[i][2],list[i][3],list[i][4])
                     if verify(c,beta, amb_sp):
@@ -132,7 +132,8 @@ class Sheaf:
         return self.dest
 
 t1 = time.time()
-a = Sheaf(0,2,2, "Ab3")
+# Change the ones that have beta non zero if beta=0 works
+a = Sheaf(0,8,1, "Ab3")
 print(a.num_dest(1))
 t2 = time.time()
 total = t2-t1
